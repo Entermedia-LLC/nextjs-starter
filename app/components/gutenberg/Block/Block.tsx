@@ -153,7 +153,6 @@ export default function Block({ block }: { block: GutenbergGlobalBlockProps }) {
     attributes: { visibility },
   } = block;
 
-  // Check visibility
 
   if (typeof RegisteredBlocks[name] === "undefined") {
     return <div>Unregistered block: {name}</div>;
@@ -161,5 +160,14 @@ export default function Block({ block }: { block: GutenbergGlobalBlockProps }) {
 
   const Component = RegisteredBlocks[name].Component;
 
-  return <Component block={block} />;
+  // Return blocks based on visibility of the block
+  if(visibility) {
+    for (const [key, value] of Object.entries(visibility)) {
+      if (currentScreens[value as keyof typeof currentScreens] === true) {
+        return <Component key={key} block={block} />
+      }
+    }
+  } else {
+    return <Component block={block} />;
+  }
 }
