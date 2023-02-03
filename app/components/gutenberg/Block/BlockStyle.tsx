@@ -63,17 +63,7 @@ export const BlockStyle = ({
       <style jsx>{`
         .${className} {
           ${generateStyles(block, "xs")}
-        }
-
-        ${
-          /* @TODO: Find a way to make the class name scoped, see #11 */
-          block?.attributes?.styles?.xs?.custom &&
-          block?.attributes?.styles?.xs?.custom.length
-            ? block.attributes.styles.xs.custom.replace(
-                "selector",
-                `.${className}`
-              )
-            : ``
+          ${extractStyles(block?.attributes?.styles?.xs?.custom)}
         }
 
         @media (min-width: ${token[
@@ -81,6 +71,7 @@ export const BlockStyle = ({
         ]}px) {
           .${className} {
             ${generateStyles(block, "sm")}
+            ${extractStyles(block?.attributes?.styles?.sm?.custom)}
           }
         }
 
@@ -89,6 +80,7 @@ export const BlockStyle = ({
           ]}px) {
           .${className} {
             ${generateStyles(block, "md")}
+            ${extractStyles(block?.attributes?.styles?.md?.custom)}
           }
         }
 
@@ -97,6 +89,7 @@ export const BlockStyle = ({
           ]}px) {
           .${className} {
             ${generateStyles(block, "lg")}
+            ${extractStyles(block?.attributes?.styles?.lg?.custom)}
           }
         }
 
@@ -105,6 +98,7 @@ export const BlockStyle = ({
           ]}px) {
           .${className} {
             ${generateStyles(block, "xl")}
+            ${extractStyles(block?.attributes?.styles?.xl?.custom)}
           }
         }
 
@@ -113,9 +107,21 @@ export const BlockStyle = ({
           ]}px) {
           .${className} {
             ${generateStyles(block, "xxl")}
+            ${extractStyles(block?.attributes?.styles?.xxl?.custom)}
           }
         }
       `}</style>
     </>
   );
 };
+
+
+// Extract custom styles from a string
+const extractStyles = (styles: string) => {
+    const regex = /selector\s*{([^}]*)}/g;
+    
+    const style = styles?.length
+      ? styles.replace(regex, "$1")
+      : ``
+    return style;
+}

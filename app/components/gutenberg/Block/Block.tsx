@@ -112,6 +112,7 @@ RegisteredBlocks["gutenberg-ant-design/row"] = {
     post,
   }: RegisteredBlocksComponentProps & {
     block: GutenbergAntDesignRowBlockProps;
+    post: {}
   }) => {
     const Row = dynamic(() => import("antd").then((mod) => mod.Row));
     const { innerBlocks, attributes } = block;
@@ -125,7 +126,7 @@ RegisteredBlocks["gutenberg-ant-design/row"] = {
 
     const Component = ({ className }: { className: string }) => (
       <Row {...api} className={className}>
-        {!!innerBlocks?.length && <Blocks blocks={innerBlocks} />}
+        {!!innerBlocks?.length && <Blocks blocks={innerBlocks} post={post}/>}
       </Row>
     );
 
@@ -146,6 +147,7 @@ RegisteredBlocks["gutenberg-ant-design/col"] = {
     post,
   }: RegisteredBlocksComponentProps & {
     block: GutenbergAntDesignColBlockProps;
+    post: {}
   }) => {
     const Col = dynamic(() => import("antd").then((mod) => mod.Col));
     const { innerBlocks, attributes } = block;
@@ -159,7 +161,7 @@ RegisteredBlocks["gutenberg-ant-design/col"] = {
 
     const Component = ({ className }: { className: string }) => (
       <Col {...api} className={className}>
-        {!!innerBlocks?.length && <Blocks blocks={innerBlocks} />}
+        {!!innerBlocks?.length && <Blocks blocks={innerBlocks} post={post} />}
       </Col>
     );
     return (
